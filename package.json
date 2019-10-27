@@ -1,6 +1,6 @@
 {
   "name": "remark-lint-mdash-style",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "rule for remark-lint to handle mdash style",
   "license": "MIT",
   "keywords": [
