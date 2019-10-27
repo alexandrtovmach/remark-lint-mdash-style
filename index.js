@@ -37,8 +37,6 @@ const visit = require("unist-util-visit");
 const generated = require("unist-util-generated");
 const toString = require("mdast-util-to-string");
 
-module.exports = rule("remark-lint:mdash-style", validateMdashStyle);
-
 const options = ["―", "-", "--"];
 
 const validateMdashStyle = (tree, file, pref) => {
@@ -46,8 +44,6 @@ const validateMdashStyle = (tree, file, pref) => {
     (typeof pref === "string" && options.includes(pref) && pref) || options[0];
   const notAllowedMdash = options.filter(el => el !== allowedMdash);
   const expression = new RegExp(`\\s(${notAllowedMdash.join("|")})\\s`, "g");
-
-  visit(tree, "text", visitor);
 
   const visitor = node => {
     let value;
@@ -65,4 +61,8 @@ const validateMdashStyle = (tree, file, pref) => {
       }
     }
   };
+  
+  visit(tree, "text", visitor);
 };
+
+module.exports = rule("remark-lint:mdash-style", validateMdashStyle);
