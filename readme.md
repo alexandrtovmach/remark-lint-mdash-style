@@ -1,4 +1,4 @@
-# remark-lint-mdash-style [![npm version](http://img.shields.io/npm/v/remark-lint-mdash-style.svg)](https://npmjs.org/package/remark-lint-mdash-style) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/remark-lint-mdash-style) ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/alexandrtovmach/remark-lint-mdash-style)
+# remark-lint-mdash-style [![npm version](http://img.shields.io/npm/v/remark-lint-mdash-style.svg)](https://npmjs.org/package/remark-lint-mdash-style) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/remark-lint-mdash-style)
 
 Warn when the mdash style violate a given style.
 
