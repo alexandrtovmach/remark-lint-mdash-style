@@ -32,44 +32,37 @@
  *   3:1-3:65: Use `―` instead of `--` for mdash
  */
 
-'use strict'
+const rule = require("unified-lint-rule");
+const visit = require("unist-util-visit");
+const generated = require("unist-util-generated");
+const toString = require("mdast-util-to-string");
 
-var rule = require('unified-lint-rule')
-var visit = require('unist-util-visit')
-var generated = require('unist-util-generated')
-var toString = require('mdast-util-to-string')
+module.exports = rule("remark-lint:mdash-style", validateMdashStyle);
 
-module.exports = rule('remark-lint:mdash-style', validateMdashStyle)
+const options = ["―", "-", "--"];
 
-var options = ['―', '-', '--']
+const validateMdashStyle = (tree, file, pref) => {
+  const allowedMdash =
+    (typeof pref === "string" && options.includes(pref) && pref) || options[0];
+  const notAllowedMdash = options.filter(el => el !== allowedMdash);
+  const expression = new RegExp(`\\s(${notAllowedMdash.join("|")})\\s`, "g");
 
-function validateMdashStyle(tree, file, pref) {
-  var allowedMdash =
-    (typeof pref === 'string' && options.includes(pref) && pref) || options[0]
-  var notAllowedMdash = options.filter(el => el !== allowedMdash)
-  var expression = new RegExp(`\\s(${notAllowedMdash.join('|')})\\s`, 'g')
+  visit(tree, "text", visitor);
 
-  visit(tree, 'heading', visitor)
-  visit(tree, 'paragraph', visitor)
-
-  function visitor(node) {
-    var value
+  const visitor = node => {
+    let value;
 
     if (!generated(node)) {
-      value = toString(node).match(expression)
+      value = toString(node).match(expression);
 
       if (value) {
         value.forEach(el =>
           file.message(
-            'Use `' +
-              allowedMdash +
-              '` instead of `' +
-              el.trim() +
-              '` for mdash',
+            `Use '${allowedMdash}' instead of '${el.trim()}' for mdash`,
             node
           )
-        )
+        );
       }
     }
-  }
-}
+  };
+};
